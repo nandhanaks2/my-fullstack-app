@@ -98,4 +98,10 @@ public class OrderService {
         response.setItems(itemResponses);
         return response;
     }
+    public OrderResponse updateStatus(Long id, String status) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found: " + id));
+        order.setStatus(status);
+        return toResponse(orderRepository.save(order));
+    }
 }
